@@ -1,1 +1,160 @@
+import java.util.Scanner;
 
+// This class acts like the core of our text editor
+class Document {
+
+    // Stores all the text (kept private for safety)
+    private StringBuffer text;
+
+    // Constructor → starts with empty text
+    public Document() {
+        text = new StringBuffer();
+    }
+
+    // Add text at the end
+    public void addText(String input) {
+        text.append(input);
+    }
+
+    // Insert text at a specific position
+    public void insertText(int position, String input) {
+        if (position >= 0 && position <= text.length()) {
+            text.insert(position, input);
+        } else {
+            System.out.println("Invalid position! Try again.");
+        }
+    }
+
+    // Delete a part of text using index range
+    public void deleteText(int start, int end) {
+        if (start >= 0 && end <= text.length() && start < end) {
+            text.delete(start, end);
+        } else {
+            System.out.println("Invalid range! Try again.");
+        }
+    }
+
+    // Replace a part of text
+    public void replaceText(int start, int end, String newText) {
+        if (start >= 0 && end <= text.length() && start < end) {
+            text.replace(start, end, newText);
+        } else {
+            System.out.println("Invalid range! Try again.");
+        }
+    }
+
+    // Reverse the whole text
+    public void reverseText() {
+        text.reverse();
+    }
+
+    // Clear all text
+    public void clearText() {
+        text.setLength(0);
+    }
+
+    // Show current text
+    public void displayText() {
+        System.out.println("\nCurrent Text: " + text.toString());
+    }
+
+    // Show length of text
+    public void showLength() {
+        System.out.println("Text Length: " + text.length());
+    }
+}
+
+
+// Main class to run the program
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Document doc = new Document();
+        int choice;
+
+        System.out.println("Welcome to Simple Text Editor");
+
+        do {
+            System.out.println("\n------ MENU ------");
+            System.out.println("1. Add Text");
+            System.out.println("2. Insert Text");
+            System.out.println("3. Delete Text");
+            System.out.println("4. Replace Text");
+            System.out.println("5. Reverse Text");
+            System.out.println("6. Clear Text");
+            System.out.println("7. Display Text");
+            System.out.println("8. Show Length");
+            System.out.println("9. Exit");
+
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // clears leftover input
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter text: ");
+                    String add = sc.nextLine();
+                    doc.addText(add);
+                    break;
+
+                case 2:
+                    System.out.print("Enter position: ");
+                    int pos = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter text: ");
+                    String insert = sc.nextLine();
+                    doc.insertText(pos, insert);
+                    break;
+
+                case 3:
+                    System.out.print("Enter start index: ");
+                    int start = sc.nextInt();
+                    System.out.print("Enter end index: ");
+                    int end = sc.nextInt();
+                    doc.deleteText(start, end);
+                    break;
+
+                case 4:
+                    System.out.print("Enter start index: ");
+                    int rStart = sc.nextInt();
+                    System.out.print("Enter end index: ");
+                    int rEnd = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter new text: ");
+                    String newText = sc.nextLine();
+                    doc.replaceText(rStart, rEnd, newText);
+                    break;
+
+                case 5:
+                    doc.reverseText();
+                    System.out.println("Text reversed successfully.");
+                    break;
+
+                case 6:
+                    doc.clearText();
+                    System.out.println("Text cleared.");
+                    break;
+
+                case 7:
+                    doc.displayText();
+                    break;
+
+                case 8:
+                    doc.showLength();
+                    break;
+
+                case 9:
+                    System.out.println("Exiting... Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+
+        } while (choice != 9);
+
+        sc.close();
+    }
+}
